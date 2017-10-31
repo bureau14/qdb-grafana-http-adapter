@@ -1,0 +1,1 @@
+# qdb-grafana-http-adapter
