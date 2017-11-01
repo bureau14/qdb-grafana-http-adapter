@@ -9,7 +9,7 @@ class SearchCtrl(Resource):
         return {'message' : '[GET] is not supported'}
 
     def post(self):
-        return app.config.get('TIMESERIES')
+        return app.config.get('TIMESERIES', [])
 
     def update(self):
         return {'message' : '[UPDATE] is not supported'}

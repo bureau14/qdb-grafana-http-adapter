@@ -9,7 +9,6 @@ import datetime as dt
 from datetime import timedelta, date
 import time
 
-
 def json_serializer(obj):
     if isinstance(obj, date):
         return time.mktime(obj.timetuple()) * 1000
@@ -26,30 +25,33 @@ class QueryCtrl(Resource):
         targets = body.get('targets', None)
 
         if range_ != None and targets != None:
-            from_ = range_.get('from', None)
-            to_ = range_.get('to', None)
-            # range1start = dateutil.parser.parse(from_)
-            # range1end = dateutil.parser.parse(to_)
-            # range1 = (range1start, range1end)
 
-            c = quasardb.Cluster('qdb://127.0.0.1:2836')
-            ts = c.ts("dummy")
+            cluster = app.config.get('QDB_CLUSTER_URI', None)
+            if cluster != None:
+                c = quasardb.Cluster(cluster)
+                timeseries = app.config.get('TIMESERIES', [])
+                grafana_data = []
 
-            col1 = ts.column(quasardb.TimeSeries.DoubleColumnInfo("col1"))
+                from_ = range_.get('from', None)
+                to_ = range_.get('to', None)
+                range1start = dateutil.parser.parse(from_)
+                range1end = dateutil.parser.parse(to_)
 
-            range1start = dt.datetime.now(quasardb.tz) - timedelta(days=3)
-            range1end = dt.datetime.now(quasardb.tz) + timedelta(days=2)
-
-            range1 = (range1start, range1end)
-            results = col1.get_ranges([range1])
-            res = json.dumps(results, default=json_serializer)
-            data = json.loads(res)
-            grafana_data = []
-
-            for i in xrange(0, len(data)):
-                grafana_data.append([int(data[i][1]), int(data[i][0])])
-
-            return [{'target': 'temperatures', 'datapoints': grafana_data}]
+                for t in targets:
+                    for ts_ in timeseries:
+                        if ts_ == t.get('target'):
+                            print ts_
+                            ts = c.ts(ts_)
+                            col1 = ts.column(quasardb.TimeSeries.DoubleColumnInfo("col_grafana"))
+                            range1 = (range1start, range1end)
+                            results = col1.get_ranges([range1])
+                            res = json.dumps(results, default=json_serializer)
+                            data = json.loads(res)
+                            datapoints = []
+                            for i in xrange(0, len(data)):
+                                datapoints.append([int(data[i][1]), int(data[i][0])])
+                            grafana_data.append({'target': ts_, 'datapoints': datapoints})
+                return grafana_data
         else:
             return { 'error' : 'No range given for timeserie or missing target(s)' }
 
