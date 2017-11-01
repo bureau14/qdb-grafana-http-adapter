@@ -23,6 +23,9 @@
 Go to grafana web interface (default is `http://localhost:3000`)
 Default credentials (`admin/admin`)
 
+Then you should see an interface similar to the below
+<img src="https://i.imgur.com/zBaATFW.png" width="700"/>
+
 ### Requirements
 
 `SimpleJSON` is required to crunch the data from the API
@@ -31,14 +34,16 @@ Go to `plugins` section, then `Find more plugins on Grafana.com`, SimpleJSON sho
 
 ### Adding a Data Source
 
-Go to `data sources` section, then click on the `Add data source`
+Once `SimpleJSON` plugin is installed, go to `Data sources` section, then click on the `Add data source` link
 
 Under config tab : 
 
 - select a name for your data source
 - select `SimpleJson` as a type
 - use the URI of the API as a Data Source : `http://$(MY_HOST)`
-- then click on Save
+- then click on Save & Test
+
+<img src="https://i.imgur.com/vP5xbo1.png" width="700"/>
 
 ### Displaying the Data
 
