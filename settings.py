@@ -2,4 +2,4 @@
 DEBUG_API=True
 PORT_API=8080
 
-TIMESERIES=['dummy']
+TIMESERIES=['ts0', 'ts1']
