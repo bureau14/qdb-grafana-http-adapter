@@ -42,7 +42,7 @@ class QueryCtrl(Resource):
                 to_ = range_.get('to', None)
                 range1start = dateutil.parser.parse(from_)
                 range1end = dateutil.parser.parse(to_)
-                
+
                 timeseries = []
                 # Grabbing all timeseries tagged with 'grafana' tag
                 if separator != None and tag_grafana != None:
@@ -56,7 +56,7 @@ class QueryCtrl(Resource):
                             name = entry + separator + col.name
                             timeseries.append(name)
 
-                # looping over targets returning datapoints for selected ones
+                # looping over targets returning datapoints for selected entries
                 for t in targets:
                     for ts in timeseries:
                         if ts == t.get('target'):
