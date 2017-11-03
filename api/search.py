@@ -14,7 +14,17 @@ class SearchCtrl(Resource):
         if cluster_uri != None:
             cluster = quasardb.Cluster(cluster_uri)
             tag = cluster.tag('grafana')
-            return list(tag.get_entries())
+            entries = list(tag.get_entries())
+            results = []
+            for entry in entries:
+                ts = cluster.ts(entry)
+                cols = ts.columns_info()
+                cols_name = []
+                for col in cols:
+                    name = entry + '.' + col.name
+                    result = {"text": name, "value": name}
+                    results.append(result)
+            return results
 
     def update(self):
         return {'message' : '[UPDATE] is not supported'}
