@@ -29,7 +29,8 @@ class QueryCtrl(Resource):
             cluster = app.config.get('QDB_CLUSTER_URI', None)
             if cluster != None:
                 c = quasardb.Cluster(cluster)
-                timeseries = app.config.get('TIMESERIES', [])
+                tag = c.tag("grafana")
+                timeseries = list(tag.get_entries())
                 grafana_data = []
 
                 from_ = range_.get('from', None)
