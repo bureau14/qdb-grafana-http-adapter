@@ -45,16 +45,15 @@ class QueryCtrl(Resource):
 
                 timeseries = []
                 # Grabbing all timeseries tagged with 'grafana' tag
-                if separator != None and tag_grafana != None:
-                    tag = c.tag(tag_grafana)
-                    entries = list(tag.get_entries())
-                    for entry in entries:
-                        ts = c.ts(entry)
-                        cols = ts.columns_info()
-                        cols_name = []
-                        for col in cols:
-                            name = entry + separator + col.name
-                            timeseries.append(name)
+                tag = c.tag(tag_grafana)
+                entries = list(tag.get_entries())
+                for entry in entries:
+                    ts = c.ts(entry)
+                    cols = ts.columns_info()
+                    cols_name = []
+                    for col in cols:
+                        name = entry + separator + col.name
+                        timeseries.append(name)
 
                 # looping over targets returning datapoints for selected entries
                 for t in targets:
