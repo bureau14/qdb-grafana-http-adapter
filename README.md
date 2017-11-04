@@ -11,6 +11,9 @@
 ### Create a dummy Timeserie with random points
 `python main.py`
 
+* WARNING
+Don't use the character '.' in your timeseries name nor columns name, unless you change the delimiter in `settings.py` which will be the pattern to not use in names.
+
 ### Start the API
 
 `pip install -r requirements.txt`
