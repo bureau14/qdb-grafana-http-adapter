@@ -24,8 +24,6 @@ class QueryCtrl(Resource):
         range_ = body.get('range', None)
         targets = body.get('targets', None)
 
-        print targets
-
         if range_ != None and targets != None:
 
             cluster = app.config.get('QDB_CLUSTER_URI', None)
