@@ -68,7 +68,6 @@ class QueryCtrl(Resource):
                             for i in xrange(0, len(data)):
                                 datapoints.append([int(data[i][1]), int(data[i][0])])
                             grafana_data.append({'target': ts, 'datapoints': datapoints})
-                print grafana_data
             return grafana_data
         else:
             return { 'error' : 'No range given for timeserie or missing target(s)' }
