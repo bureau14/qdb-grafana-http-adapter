@@ -11,7 +11,9 @@ class SearchCtrl(Resource):
 
     def post(self):
         cluster_uri = app.config.get('QDB_CLUSTER_URI', None)
-        if cluster_uri != None:
+        separator = app.config.get('SEPARATOR_TS_LABEL', None)
+
+        if cluster_uri != None and separator != None:
             cluster = quasardb.Cluster(cluster_uri)
             tag = cluster.tag('grafana')
             entries = list(tag.get_entries())
@@ -21,7 +23,7 @@ class SearchCtrl(Resource):
                 cols = ts.columns_info()
                 cols_name = []
                 for col in cols:
-                    name = entry + '.' + col.name
+                    name = entry + separator + col.name
                     result = {"text": name, "value": name}
                     results.append(result)
             return results
