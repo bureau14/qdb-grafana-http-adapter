@@ -66,7 +66,7 @@ class QueryCtrl(Resource):
                             data = json.loads(res)
                             len_serie = len(data)
                             datapoints = []
-                            
+
                             step = 1
                             if len_serie > 20000 and len_serie < 100000:
                                 step = 5
@@ -77,7 +77,7 @@ class QueryCtrl(Resource):
                             else:
                                 step = 1
 
-                            for i in xrange(0, len(data), step):
+                            for i in xrange(0, len_serie, step):
                                 datapoints.append([int(data[i][1]), int(data[i][0])])
                             grafana_data.append({'target': ts, 'datapoints': datapoints})
             return grafana_data
