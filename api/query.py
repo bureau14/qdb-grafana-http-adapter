@@ -64,8 +64,20 @@ class QueryCtrl(Resource):
                             results = col_selected.get_ranges([range1])
                             res = json.dumps(results, default=json_serializer)
                             data = json.loads(res)
+                            len_serie = len(data)
                             datapoints = []
-                            for i in xrange(0, len(data)):
+                            
+                            step = 1
+                            if len_serie > 20000 and len_serie < 100000:
+                                step = 5
+                            elif len_serie >= 100000 and len_serie < 1000000:
+                                step = 100
+                            elif len_serie > 1000000:
+                                step = 500
+                            else:
+                                step = 1
+
+                            for i in xrange(0, len(data), step):
                                 datapoints.append([int(data[i][1]), int(data[i][0])])
                             grafana_data.append({'target': ts, 'datapoints': datapoints})
             return grafana_data
