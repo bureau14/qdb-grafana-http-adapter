@@ -5,6 +5,7 @@
 - windows OS (x86/amd64), linux, freebsd, ~~macOS~~
 - qdb-api-python (https://github.com/bureau14/qdb-api-python) installed
 - grafana server running
+- SimpleJSON (for Grafana) plugin installed
 
 ## How to use it ?
 
