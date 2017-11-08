@@ -11,9 +11,6 @@
 ### Create a dummy Timeserie with random points
 `python main.py`
 
-* WARNING
-Don't use the character '.' in your timeseries name nor columns name, unless you change the delimiter in `settings.py` which will be the pattern to not use in names.
-
 ### Start the API
 
 `pip install -r requirements.txt`
@@ -46,7 +43,7 @@ Under config tab :
 - use the URI of the API as a Data Source : `http://$(MY_HOST)`
 - then click on Save & Test
 
-<img src="https://i.imgur.com/vP5xbo1.png" width="700"/>
+<img src="https://i.imgur.com/vP5xbo1.png" width="500"/>
 
 ### Displaying the Data
 
@@ -57,6 +54,11 @@ Under config tab :
 - You'll see a dropdown to select your data source, and another one to add one or more Timeserie target(s)
 
 
+### Warning
+If you use a special character such as `:`, `,`, `%` in your timeseries name nor columns name, you will need change the delimiter `settings.py`/`[SEPARATOR_TS_LABEL]`; it will be the pattern to keep out of columns/timeseries aliases.
+
+To improve performances on grafana panel, we've set a variable in `settings.py`/`[ARBITRATY_NB_DATAPOINTS]`, which'll limit the number of datapoints in API Output.
+
 #### Note for macOS users
 
-qdb-api-python is not yet supported on macOS X
+`qdb-api-python` is not yet totally supported on macOS X
