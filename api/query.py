@@ -29,6 +29,7 @@ class QueryCtrl(Resource):
             cluster = app.config.get('QDB_CLUSTER_URI', None)
             separator = app.config.get('SEPARATOR_TS_LABEL', None)
             tag_grafana = app.config.get('TAG_TS_GRAFANA', None)
+            limit_datapoints = app.config.get('ARBITRATY_NB_DATAPOINTS', None)
 
             if cluster != None and separator != None and tag_grafana != None:
                 c = quasardb.Cluster(cluster)
@@ -42,7 +43,7 @@ class QueryCtrl(Resource):
                 range1end = dateutil.parser.parse(to_)
 
                 timeseries = []
-                # Grabbing all timeseries tagged with 'grafana' tag
+                # Getting all timeseries tagged with 'grafana' tag
                 tag = c.tag(tag_grafana)
                 entries = list(tag.get_entries())
                 for entry in entries:
@@ -53,7 +54,7 @@ class QueryCtrl(Resource):
                         name = entry + separator + col.name
                         timeseries.append(name)
 
-                # looping over targets returning datapoints for selected entries
+                # Looping over targets returning datapoints for selected entries
                 for t in targets:
                     for ts in timeseries:
                         if ts == t.get('target'):
@@ -68,14 +69,15 @@ class QueryCtrl(Resource):
                             datapoints = []
 
                             step = 1
-                            if len_serie > 20000 and len_serie < 100000:
-                                step = 5
-                            elif len_serie >= 100000 and len_serie < 1000000:
-                                step = 100
-                            elif len_serie > 1000000:
-                                step = 500
+                            if limit_datapoints != None and int(limit_datapoint) > 0:
+                                step =  len_serie / limit_datapoints
                             else:
-                                step = 1
+                                if len_serie > 20000 and len_serie < 100000:
+                                    step = 5
+                                elif len_serie >= 100000 and len_serie < 1000000:
+                                    step = 100
+                                elif len_serie > 1000000:
+                                    step = 500
 
                             for i in xrange(0, len_serie, step):
                                 datapoints.append([int(data[i][1]), int(data[i][0])])
