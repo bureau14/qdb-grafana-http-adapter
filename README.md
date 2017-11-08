@@ -58,7 +58,7 @@ Under config tab :
 ### Warning
 If you use a special character such as `:`, `,`, `%` in your timeseries name nor columns name, you will need change the delimiter `settings.py`/`[SEPARATOR_TS_LABEL]`; it will be the pattern to keep out of columns/timeseries aliases.
 
-To improve performances on grafana panel, we've set a variable in `settings.py`/`[ARBITRATY_NB_DATAPOINTS]`, which'll limit the number of datapoints in API Output.
+To improve performances on grafana panel, we've set a variable in `settings.py`/`[ARBITRATY_NB_DATAPOINTS]`, which'll limit the number of datapoints in API Output. If you don't want to limit the output, set `settings.py`/`[ARBITRATY_NB_DATAPOINTS]` to None`.
 
 #### Note for macOS users
 
