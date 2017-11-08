@@ -67,17 +67,10 @@ class QueryCtrl(Resource):
                             data = json.loads(res)
                             len_serie = len(data)
                             datapoints = []
-
                             step = 1
+                            
                             if limit_datapoints != None and int(limit_datapoint) > 0:
                                 step =  len_serie / limit_datapoints
-                            else:
-                                if len_serie > 20000 and len_serie < 100000:
-                                    step = 5
-                                elif len_serie >= 100000 and len_serie < 1000000:
-                                    step = 100
-                                elif len_serie > 1000000:
-                                    step = 500
 
                             for i in xrange(0, len_serie, step):
                                 datapoints.append([int(data[i][1]), int(data[i][0])])
