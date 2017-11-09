@@ -5,3 +5,5 @@ QDB_CLUSTER_URI='qdb://127.0.0.1:2836'
 SEPARATOR_TS_LABEL=':'
 # tag used to distinguish which ts should be selectable in grafana
 TAG_TS_GRAFANA='grafana'
+# datapoints limitation
+ARBITRATY_NB_DATAPOINTS=20000
