@@ -1,4 +1,6 @@
+# pylint: disable=C0103,C0111,R0201
 # -*- coding: utf-8 -*-
+
 PORT_API=8080
 QDB_CLUSTER_URI='qdb://127.0.0.1:2836'
 # used to separate in target, ts from column
@@ -6,4 +8,4 @@ SEPARATOR_TS_LABEL=':'
 # tag used to distinguish which ts should be selectable in grafana
 TAG_TS_GRAFANA='grafana'
 # datapoints limitation
-ARBITRATY_NB_DATAPOINTS=20000
+ARBITRARY_NB_DATAPOINTS=20000
