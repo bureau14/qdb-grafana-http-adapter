@@ -2,6 +2,7 @@
 import json
 import time
 from datetime import date
+from flask_restful import Resource, reqparse
 from flask import current_app as app, request
 import dateutil.parser
 import quasardb
