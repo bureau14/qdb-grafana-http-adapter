@@ -1,20 +1,23 @@
-# qdb-grafana-http-adapter
+# Quasardb Grafana HTTP Adapter
 
 ## Requirements
 
-- windows OS (x86/amd64), linux, freebsd, ~~macOS~~
-- qdb-api-python (https://github.com/bureau14/qdb-api-python) installed
-- grafana server running
+- Windows, Linux, Freebsd, ~~macOS~~
+- `qdb-api-python` installed (https://github.com/bureau14/qdb-api-python)
+- Grafana Server running
 - SimpleJSON (for Grafana) plugin installed
 
 ## How to use it ?
 
-### Create a dummy Timeserie with random points
-`python main.py`
+### Getting started
+
+By default only timeseries with tag `grafana` will be listed in your grafana interface.
+You can edit this tag, replacing `settings.py`/`[TAG_TS_GRAFANA]`
 
 ### Start the API
 
 `pip install -r requirements.txt`
+
 `python app.py`
 
 ## In Grafana
@@ -62,4 +65,4 @@ To improve performances on grafana panel, we've set a variable in `settings.py`/
 
 #### Note for macOS users
 
-`qdb-api-python` is not yet totally supported on macOS X
+`qdb-api-python` is not yet totally supported on macOS X, so consider running the API in a supported environement such as Windows, Linux or FreeBSD.
