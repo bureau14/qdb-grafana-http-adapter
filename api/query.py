@@ -1,13 +1,11 @@
+# pylint: disable=C0103,C0111,C0326,E0401,R0914,R0201,R1702
+import json
+import time
+from datetime import date
 from flask_restful import Resource, reqparse
 from flask import current_app as app, request
-import json
-import os
 import dateutil.parser
 import quasardb
-
-import datetime as dt
-from datetime import timedelta, date
-import time
 
 def json_serializer(obj):
     if isinstance(obj, date):
@@ -29,6 +27,7 @@ class QueryCtrl(Resource):
             cluster = app.config.get('QDB_CLUSTER_URI', None)
             separator = app.config.get('SEPARATOR_TS_LABEL', None)
             tag_grafana = app.config.get('TAG_TS_GRAFANA', None)
+            limit_datapoints = app.config.get('ARBITRARY_NB_DATAPOINTS', None)
 
             if cluster != None and separator != None and tag_grafana != None:
                 c = quasardb.Cluster(cluster)
@@ -42,18 +41,17 @@ class QueryCtrl(Resource):
                 range1end = dateutil.parser.parse(to_)
 
                 timeseries = []
-                # Grabbing all timeseries tagged with 'grafana' tag
+                # Getting all timeseries tagged with 'grafana' tag
                 tag = c.tag(tag_grafana)
                 entries = list(tag.get_entries())
                 for entry in entries:
                     ts = c.ts(entry)
                     cols = ts.columns_info()
-                    cols_name = []
                     for col in cols:
                         name = entry + separator + col.name
                         timeseries.append(name)
 
-                # looping over targets returning datapoints for selected entries
+                # Looping over targets returning datapoints for selected entries
                 for t in targets:
                     for ts in timeseries:
                         if ts == t.get('target'):
@@ -64,13 +62,18 @@ class QueryCtrl(Resource):
                             results = col_selected.get_ranges([range1])
                             res = json.dumps(results, default=json_serializer)
                             data = json.loads(res)
+                            len_serie = len(data)
                             datapoints = []
-                            for i in xrange(0, len(data)):
+                            step = 1
+
+                            if limit_datapoints != None and int(limit_datapoints) > 0:
+                                step = len_serie / limit_datapoints
+
+                            for i in xrange(0, len_serie, step):
                                 datapoints.append([int(data[i][1]), int(data[i][0])])
                             grafana_data.append({'target': ts, 'datapoints': datapoints})
             return grafana_data
-        else:
-            return { 'error' : 'No range given for timeserie or missing target(s)' }
+        return {'error' : 'No range given for timeserie or missing target(s)'}
 
     def update(self):
         return {'message' : '[UPDATE] is not supported'}
