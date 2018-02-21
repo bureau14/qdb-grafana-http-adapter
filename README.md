@@ -3,6 +3,7 @@
 ## Requirements
 
 - Windows, Linux, Freebsd, ~~macOS~~
+- quasardb Daemon running (`qdbd`)
 - `qdb-api-python` installed (https://github.com/bureau14/qdb-api-python)
 - Grafana Server running
 - SimpleJSON (for Grafana) plugin installed
@@ -13,6 +14,7 @@
 
 By default only timeseries with tag `grafana` will be listed in your grafana interface.
 You can edit this tag, replacing `settings.py`/`[TAG_TS_GRAFANA]`
+Update your `QDB_CLUSTER_URI` in `settings.py` with the URI of your Quasardb cluster
 
 ### Start the API
 
