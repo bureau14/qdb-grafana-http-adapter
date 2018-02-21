@@ -15,7 +15,7 @@
 By default only timeseries with tag `grafana` will be listed in your grafana interface.
 You can edit this tag, replacing `settings.py`/`[TAG_TS_GRAFANA]`.
 
-Update your `QDB_CLUSTER_URI` in `settings.py` with the URI of your Quasardb cluster
+Update `QDB_CLUSTER_URI` variable in `settings.py` w/ URI of your Quasardb cluster.
 
 ### Start the API
 
