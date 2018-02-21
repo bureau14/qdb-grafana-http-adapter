@@ -16,6 +16,7 @@ By default only timeseries with tag `grafana` will be listed in your grafana int
 You can edit this tag, replacing `settings.py`/`[TAG_TS_GRAFANA]`.
 
 Update `QDB_CLUSTER_URI` variable in `settings.py` w/ URI of your Quasardb cluster.
+Default `PORT_API` is `8080`, can be replaced in `settings.py`.
 
 ### Start the API
 
@@ -43,11 +44,11 @@ Go to `plugins` section, then `Find more plugins on Grafana.com`, SimpleJSON sho
 
 Once `SimpleJSON` plugin is installed, go to `Data sources` section, then click on the `Add data source` link
 
-Under config tab : 
+Under config tab :
 
 - select a name for your data source
 - select `SimpleJson` as a type
-- use the URI of the API as a Data Source : `http://$(MY_HOST)`
+- use the URI of the API as a Data Source : `http://$(MY_HOST):$(PORT_API)`
 - then click on Save & Test
 
 <img src="https://i.imgur.com/vP5xbo1.png" width="500"/>
