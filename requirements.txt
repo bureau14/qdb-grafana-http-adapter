@@ -1,4 +1,4 @@
 Flask==0.12.2
 Flask-RESTful==0.3.5
-flask_cors==3.0.3
+flask_cors==3.0.9
 python-dateutil
